@@ -1,11 +1,12 @@
 /* global describe, it, expect */
 
-var pkg = require('..');
+var chain = require('..');
 
 describe('oauth2orize-chain', function() {
   
-  it('should export object', function() {
-    expect(pkg).to.be.an('object');
+  it('should export exchanges', function() {
+    expect(chain.exchange).to.be.an('object');
+    expect(chain.exchange.chain).to.be.a('function');
   });
   
 });
