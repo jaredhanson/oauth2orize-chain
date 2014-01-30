@@ -1,3 +1,5 @@
+/* global describe, it, expect, before */
+
 var chai = require('chai')
   , chain = require('../../lib/exchange/chain');
 
@@ -15,12 +17,12 @@ describe('exchange.chain', function() {
   });
   
   describe('issuing an access token', function() {
-    var response, err;
+    var response;
 
     before(function(done) {
       function issue(client, token, done) {
         if (client.id == 'c123' && token == 'shh') {
-          return done(null, 's3cr1t')
+          return done(null, 's3cr1t');
         }
         return done(new Error('something is wrong'));
       }
@@ -49,12 +51,12 @@ describe('exchange.chain', function() {
   });
   
   describe('issuing an access token and refresh token', function() {
-    var response, err;
+    var response;
 
     before(function(done) {
       function issue(client, token, done) {
         if (client.id == 'c123' && token == 'shh') {
-          return done(null, 's3cr1t', 'getANotehr')
+          return done(null, 's3cr1t', 'getANotehr');
         }
         return done(new Error('something is wrong'));
       }
@@ -83,12 +85,12 @@ describe('exchange.chain', function() {
   });
   
   describe('issuing an access token and params', function() {
-    var response, err;
+    var response;
 
     before(function(done) {
       function issue(client, token, done) {
         if (client.id == 'c123' && token == 'shh') {
-          return done(null, 's3cr1t', { 'expires_in': 3600 })
+          return done(null, 's3cr1t', { 'expires_in': 3600 });
         }
         return done(new Error('something is wrong'));
       }
@@ -117,12 +119,12 @@ describe('exchange.chain', function() {
   });
   
   describe('issuing an access token and params with token type', function() {
-    var response, err;
+    var response;
 
     before(function(done) {
       function issue(client, token, done) {
         if (client.id == 'c123' && token == 'shh') {
-          return done(null, 's3cr1t', { 'token_type': 'foo', 'expires_in': 3600 })
+          return done(null, 's3cr1t', { 'token_type': 'foo', 'expires_in': 3600 });
         }
         return done(new Error('something is wrong'));
       }
@@ -151,12 +153,12 @@ describe('exchange.chain', function() {
   });
   
   describe('issuing an access token, null refresh token, and params', function() {
-    var response, err;
+    var response;
 
     before(function(done) {
       function issue(client, token, done) {
         if (client.id == 'c123' && token == 'shh') {
-          return done(null, 's3cr1t', null, { 'expires_in': 3600 })
+          return done(null, 's3cr1t', null, { 'expires_in': 3600 });
         }
         return done(new Error('something is wrong'));
       }
@@ -185,12 +187,12 @@ describe('exchange.chain', function() {
   });
   
   describe('issuing an access token, refresh token, and params with token type', function() {
-    var response, err;
+    var response;
 
     before(function(done) {
       function issue(client, token, done) {
         if (client.id == 'c123' && token == 'shh') {
-          return done(null, 's3cr1t', 'blahblag', { 'token_type': 'foo', 'expires_in': 3600 })
+          return done(null, 's3cr1t', 'blahblag', { 'token_type': 'foo', 'expires_in': 3600 });
         }
         return done(new Error('something is wrong'));
       }
@@ -219,12 +221,12 @@ describe('exchange.chain', function() {
   });
   
   describe('issuing an access token based on scope', function() {
-    var response, err;
+    var response;
 
     before(function(done) {
       function issue(client, token, scope, done) {
         if (client.id == 'c123' && token == 'shh' && scope.length == 1 && scope[0] == 'read') {
-          return done(null, 's3cr1t')
+          return done(null, 's3cr1t');
         }
         return done(new Error('something is wrong'));
       }
@@ -253,12 +255,12 @@ describe('exchange.chain', function() {
   });
   
   describe('issuing an access token based on list of scopes', function() {
-    var response, err;
+    var response;
 
     before(function(done) {
       function issue(client, token, scope, done) {
         if (client.id == 'c123' && token == 'shh' && scope.length == 2 && scope[0] == 'read' && scope[1] == 'write') {
-          return done(null, 's3cr1t')
+          return done(null, 's3cr1t');
         }
         return done(new Error('something is wrong'));
       }
@@ -287,12 +289,12 @@ describe('exchange.chain', function() {
   });
   
   describe('issuing an access token based on scheme and scope', function() {
-    var response, err;
+    var response;
 
     before(function(done) {
       function issue(client, scheme, token, scope, done) {
         if (scheme == 'Bearer' && client.id == 'c123' && token == 'shh' && scope.length == 1 && scope[0] == 'read') {
-          return done(null, 's3cr1t')
+          return done(null, 's3cr1t');
         }
         return done(new Error('something is wrong'));
       }
@@ -325,7 +327,7 @@ describe('exchange.chain', function() {
 
     before(function(done) {
       function issue(client, token, done) {
-        return done(null, false)
+        return done(null, false);
       }
       
       chai.connect.use(chain(issue))
@@ -354,7 +356,7 @@ describe('exchange.chain', function() {
 
     before(function(done) {
       function issue(client, token, done) {
-        return done(null, false)
+        return done(null, false);
       }
       
       chai.connect.use(chain(issue))
@@ -383,7 +385,7 @@ describe('exchange.chain', function() {
 
     before(function(done) {
       function issue(client, token, done) {
-        return done(null, false)
+        return done(null, false);
       }
       
       chai.connect.use(chain(issue))
@@ -464,7 +466,7 @@ describe('exchange.chain', function() {
 
     before(function(done) {
       function issue(client, token, done) {
-        return done(null, false)
+        return done(null, false);
       }
       
       chai.connect.use(chain(issue))
@@ -487,12 +489,12 @@ describe('exchange.chain', function() {
   describe('with scope separator option', function() {
     
     describe('issuing an access token based on list of scopes', function() {
-      var response, err;
+      var response;
 
       before(function(done) {
         function issue(client, token, scope, done) {
           if (client.id == 'c123' && token == 'shh' && scope.length == 2 && scope[0] == 'read' && scope[1] == 'write') {
-            return done(null, 's3cr1t')
+            return done(null, 's3cr1t');
           }
           return done(new Error('something is wrong'));
         }
@@ -525,12 +527,12 @@ describe('exchange.chain', function() {
   describe('with multiple scope separator option', function() {
     
     describe('issuing an access token based on list of scopes separated by space', function() {
-      var response, err;
+      var response;
 
       before(function(done) {
         function issue(client, token, scope, done) {
           if (client.id == 'c123' && token == 'shh' && scope.length == 2 && scope[0] == 'read' && scope[1] == 'write') {
-            return done(null, 's3cr1t')
+            return done(null, 's3cr1t');
           }
           return done(new Error('something is wrong'));
         }
@@ -559,12 +561,12 @@ describe('exchange.chain', function() {
     });
     
     describe('issuing an access token based on list of scopes separated by comma', function() {
-      var response, err;
+      var response;
 
       before(function(done) {
         function issue(client, token, scope, done) {
           if (client.id == 'c123' && token == 'shh' && scope.length == 2 && scope[0] == 'read' && scope[1] == 'write') {
-            return done(null, 's3cr1t')
+            return done(null, 's3cr1t');
           }
           return done(new Error('something is wrong'));
         }
@@ -597,12 +599,12 @@ describe('exchange.chain', function() {
   describe('with user property option', function() {
     
     describe('issuing an access token', function() {
-      var response, err;
+      var response;
 
       before(function(done) {
         function issue(client, token, done) {
           if (client.id == 'c123' && token == 'shh') {
-            return done(null, 's3cr1t')
+            return done(null, 's3cr1t');
           }
           return done(new Error('something is wrong'));
         }
