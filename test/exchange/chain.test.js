@@ -286,6 +286,40 @@ describe('exchange.chain', function() {
     });
   });
   
+  describe('issuing an access token based on scheme and scope', function() {
+    var response, err;
+
+    before(function(done) {
+      function issue(client, scheme, token, scope, done) {
+        if (scheme == 'Bearer' && client.id == 'c123' && token == 'shh' && scope.length == 1 && scope[0] == 'read') {
+          return done(null, 's3cr1t')
+        }
+        return done(new Error('something is wrong'));
+      }
+      
+      chai.connect.use(chain(issue))
+        .req(function(req) {
+          req.user = { id: 'c123' };
+          req.body = { oauth_token: 'Bearer shh', scope: 'read' };
+        })
+        .end(function(res) {
+          response = res;
+          done();
+        })
+        .dispatch();
+    });
+    
+    it('should respond with headers', function() {
+      expect(response.getHeader('Content-Type')).to.equal('application/json');
+      expect(response.getHeader('Cache-Control')).to.equal('no-store');
+      expect(response.getHeader('Pragma')).to.equal('no-cache');
+    });
+    
+    it('should respond with body', function() {
+      expect(response.body).to.equal('{"access_token":"s3cr1t","token_type":"Bearer"}');
+    });
+  });
+  
   describe('not issuing an access token', function() {
     var err;
 
