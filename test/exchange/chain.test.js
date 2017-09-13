@@ -490,152 +490,158 @@ describe('exchange.chain', function() {
     });
   });
   
-  describe('with scope separator option', function() {
+  describe('options', function() {
     
-    describe('issuing an access token based on list of scopes', function() {
-      var response;
+    describe('userProperty', function() {
+      
+      describe('issuing an access token', function() {
+        var response;
 
-      before(function(done) {
-        function issue(client, token, scope, done) {
-          if (client.id == 'c123' && token == 'shh' && scope.length == 2 && scope[0] == 'read' && scope[1] == 'write') {
+        before(function(done) {
+          function issue(client, token, done) {
+            if (client.id !== 'c123') { return done(new Error('incorrect client argument')); }
+            if (token !== 'shh') { return done(new Error('incorrect token argument')); }
+            
             return done(null, 's3cr1t');
           }
-          return done(new Error('something is wrong'));
-        }
       
-        chai.connect.use(chain({ scopeSeparator: ',' }, issue))
-          .req(function(req) {
-            req.user = { id: 'c123' };
-            req.body = { oauth_token: 'Bearer shh', scope: 'read,write' };
-          })
-          .end(function(res) {
-            response = res;
-            done();
-          })
-          .dispatch();
+          chai.connect.use(chain({ userProperty: 'client' }, issue))
+            .req(function(req) {
+              req.client = { id: 'c123' };
+              req.body = { oauth_token: 'Bearer shh' };
+            })
+            .end(function(res) {
+              response = res;
+              done();
+            })
+            .dispatch();
+        });
+    
+        it('should respond with headers', function() {
+          expect(response.getHeader('Content-Type')).to.equal('application/json');
+          expect(response.getHeader('Cache-Control')).to.equal('no-store');
+          expect(response.getHeader('Pragma')).to.equal('no-cache');
+        });
+    
+        it('should respond with body', function() {
+          expect(response.body).to.equal('{"access_token":"s3cr1t","token_type":"Bearer"}');
+        });
       });
+      
+    }); // userProperty
     
-      it('should respond with headers', function() {
-        expect(response.getHeader('Content-Type')).to.equal('application/json');
-        expect(response.getHeader('Cache-Control')).to.equal('no-store');
-        expect(response.getHeader('Pragma')).to.equal('no-cache');
-      });
-    
-      it('should respond with body', function() {
-        expect(response.body).to.equal('{"access_token":"s3cr1t","token_type":"Bearer"}');
-      });
-    });
-    
-  });
-  
-  describe('with multiple scope separator option', function() {
-    
-    describe('issuing an access token based on list of scopes separated by space', function() {
-      var response;
+    describe('scopeSeparator', function() {
+      
+      describe('single separator', function() {
+        var response;
 
-      before(function(done) {
-        function issue(client, token, scope, done) {
-          if (client.id == 'c123' && token == 'shh' && scope.length == 2 && scope[0] == 'read' && scope[1] == 'write') {
+        before(function(done) {
+          function issue(client, token, scope, done) {
+            if (client.id !== 'c123') { return done(new Error('incorrect client argument')); }
+            if (token !== 'shh') { return done(new Error('incorrect token argument')); }
+            if (scope.length !== 2 || scope[0] !== 'read' || scope[1] !== 'write') { return done(new Error('incorrect scope argument')); }
+            
             return done(null, 's3cr1t');
           }
-          return done(new Error('something is wrong'));
-        }
       
-        chai.connect.use(chain({ scopeSeparator: [' ', ','] }, issue))
-          .req(function(req) {
-            req.user = { id: 'c123' };
-            req.body = { oauth_token: 'Bearer shh', scope: 'read write' };
-          })
-          .end(function(res) {
-            response = res;
-            done();
-          })
-          .dispatch();
-      });
+          chai.connect.use(chain({ scopeSeparator: ',' }, issue))
+            .req(function(req) {
+              req.user = { id: 'c123' };
+              req.body = { oauth_token: 'Bearer shh', scope: 'read,write' };
+            })
+            .end(function(res) {
+              response = res;
+              done();
+            })
+            .dispatch();
+        });
     
-      it('should respond with headers', function() {
-        expect(response.getHeader('Content-Type')).to.equal('application/json');
-        expect(response.getHeader('Cache-Control')).to.equal('no-store');
-        expect(response.getHeader('Pragma')).to.equal('no-cache');
-      });
+        it('should respond with headers', function() {
+          expect(response.getHeader('Content-Type')).to.equal('application/json');
+          expect(response.getHeader('Cache-Control')).to.equal('no-store');
+          expect(response.getHeader('Pragma')).to.equal('no-cache');
+        });
     
-      it('should respond with body', function() {
-        expect(response.body).to.equal('{"access_token":"s3cr1t","token_type":"Bearer"}');
-      });
-    });
-    
-    describe('issuing an access token based on list of scopes separated by comma', function() {
-      var response;
+        it('should respond with body', function() {
+          expect(response.body).to.equal('{"access_token":"s3cr1t","token_type":"Bearer"}');
+        });
+      }); // single separator
+      
+      describe('multiple separators', function() {
+        
+        describe('separating based on preferred separator', function() {
+          var response;
 
-      before(function(done) {
-        function issue(client, token, scope, done) {
-          if (client.id == 'c123' && token == 'shh' && scope.length == 2 && scope[0] == 'read' && scope[1] == 'write') {
-            return done(null, 's3cr1t');
-          }
-          return done(new Error('something is wrong'));
-        }
+          before(function(done) {
+            function issue(client, token, scope, done) {
+              if (client.id !== 'c123') { return done(new Error('incorrect client argument')); }
+              if (token !== 'shh') { return done(new Error('incorrect token argument')); }
+              if (scope.length !== 2 || scope[0] !== 'read' || scope[1] !== 'write') { return done(new Error('incorrect scope argument')); }
+            
+              return done(null, 's3cr1t');
+            }
       
-        chai.connect.use(chain({ scopeSeparator: [' ', ','] }, issue))
-          .req(function(req) {
-            req.user = { id: 'c123' };
-            req.body = { oauth_token: 'Bearer shh', scope: 'read,write' };
-          })
-          .end(function(res) {
-            response = res;
-            done();
-          })
-          .dispatch();
-      });
+            chai.connect.use(chain({ scopeSeparator: [' ', ','] }, issue))
+              .req(function(req) {
+                req.user = { id: 'c123' };
+                req.body = { oauth_token: 'Bearer shh', scope: 'read write' };
+              })
+              .end(function(res) {
+                response = res;
+                done();
+              })
+              .dispatch();
+          });
     
-      it('should respond with headers', function() {
-        expect(response.getHeader('Content-Type')).to.equal('application/json');
-        expect(response.getHeader('Cache-Control')).to.equal('no-store');
-        expect(response.getHeader('Pragma')).to.equal('no-cache');
-      });
+          it('should respond with headers', function() {
+            expect(response.getHeader('Content-Type')).to.equal('application/json');
+            expect(response.getHeader('Cache-Control')).to.equal('no-store');
+            expect(response.getHeader('Pragma')).to.equal('no-cache');
+          });
     
-      it('should respond with body', function() {
-        expect(response.body).to.equal('{"access_token":"s3cr1t","token_type":"Bearer"}');
-      });
-    });
-    
-  });
-  
-  describe('with user property option', function() {
-    
-    describe('issuing an access token', function() {
-      var response;
+          it('should respond with body', function() {
+            expect(response.body).to.equal('{"access_token":"s3cr1t","token_type":"Bearer"}');
+          });
+        }); // separating based on preferred separator
+        
+        describe('separating based on alternate separator', function() {
+          var response;
 
-      before(function(done) {
-        function issue(client, token, done) {
-          if (client.id == 'c123' && token == 'shh') {
-            return done(null, 's3cr1t');
-          }
-          return done(new Error('something is wrong'));
-        }
+          before(function(done) {
+            function issue(client, token, scope, done) {
+              if (client.id == 'c123' && token == 'shh' && scope.length == 2 && scope[0] == 'read' && scope[1] == 'write') {
+                return done(null, 's3cr1t');
+              }
+              return done(new Error('something is wrong'));
+            }
       
-        chai.connect.use(chain({ userProperty: 'client' }, issue))
-          .req(function(req) {
-            req.client = { id: 'c123' };
-            req.body = { oauth_token: 'Bearer shh' };
-          })
-          .end(function(res) {
-            response = res;
-            done();
-          })
-          .dispatch();
-      });
+            chai.connect.use(chain({ scopeSeparator: [' ', ','] }, issue))
+              .req(function(req) {
+                req.user = { id: 'c123' };
+                req.body = { oauth_token: 'Bearer shh', scope: 'read,write' };
+              })
+              .end(function(res) {
+                response = res;
+                done();
+              })
+              .dispatch();
+          });
     
-      it('should respond with headers', function() {
-        expect(response.getHeader('Content-Type')).to.equal('application/json');
-        expect(response.getHeader('Cache-Control')).to.equal('no-store');
-        expect(response.getHeader('Pragma')).to.equal('no-cache');
-      });
+          it('should respond with headers', function() {
+            expect(response.getHeader('Content-Type')).to.equal('application/json');
+            expect(response.getHeader('Cache-Control')).to.equal('no-store');
+            expect(response.getHeader('Pragma')).to.equal('no-cache');
+          });
     
-      it('should respond with body', function() {
-        expect(response.body).to.equal('{"access_token":"s3cr1t","token_type":"Bearer"}');
-      });
-    });
+          it('should respond with body', function() {
+            expect(response.body).to.equal('{"access_token":"s3cr1t","token_type":"Bearer"}');
+          });
+        }); // separating based on alternate separator
+        
+      }); // multiple separators
+      
+    }); // scopeSeparator
     
-  });
+  }); // options
   
 });
