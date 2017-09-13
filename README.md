@@ -22,22 +22,18 @@ in order to fulfill the original request.
 
 #### Register Exchange
 
-Register the exchange with an OAuth 2.0 server.
+Register the exchange with a `Server` instance and implement the `issue`
+callback:
 
 ```javascript
 var chain = require('oauth2orize-chain').exchange.chain;
 
-server.exchange('http://oauth.net/grant_type/chain', chain(function(client, scheme, credential, scope, done) {
-  AccessToken.verify(credential, function(err, t) {
-    if (err) { return done(err); }
-
-    var token = utils.uid(256);
-    var at = new AccessToken(token, t.userId, client.id, t.scope);
-    at.save(function(err) {
-      if (err) { return done(err); }
-      return done(null, token);
-    });
-  });
+server.exchange('http://oauth.net/grant_type/chain', chain(function(client, token, scope, done) {
+  // TODO:
+  // 1. Verify the access token.
+  // 2. Ensure that the token is being exchanged by resource server for which it
+  //    is intended.
+  // 3. Issue a chained access token.
 });
 ```
 
