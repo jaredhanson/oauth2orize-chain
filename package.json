@@ -1,6 +1,6 @@
 {
   "name": "oauth2orize-chain",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Chained token exchange for OAuth2orize.",
   "keywords": [
     "oauth2"
