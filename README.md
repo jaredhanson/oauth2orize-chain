@@ -1,18 +1,18 @@
 # oauth2orize-chain
 
-[![Build](https://travis-ci.org/jaredhanson/oauth2orize-chain.png)](https://travis-ci.org/jaredhanson/oauth2orize-chain)
-[![Coverage](https://coveralls.io/repos/jaredhanson/oauth2orize-chain/badge.png)](https://coveralls.io/r/jaredhanson/oauth2orize-chain)
-[![Quality](https://codeclimate.com/github/jaredhanson/oauth2orize-chain.png)](https://codeclimate.com/github/jaredhanson/oauth2orize-chain)
-[![Dependencies](https://david-dm.org/jaredhanson/oauth2orize-chain.png)](https://david-dm.org/jaredhanson/oauth2orize-chain)
-[![Tips](http://img.shields.io/gittip/jaredhanson.png)](https://www.gittip.com/jaredhanson/)
+[![Build](https://img.shields.io/travis/jaredhanson/oauth2orize-chain.svg)](https://travis-ci.org/jaredhanson/oauth2orize-chain)
+[![Coverage](https://img.shields.io/coveralls/jaredhanson/oauth2orize-chain.svg)](https://coveralls.io/r/jaredhanson/oauth2orize-chain)
+[![Quality](https://img.shields.io/codeclimate/github/jaredhanson/oauth2orize-chain.svg?label=quality)](https://codeclimate.com/github/jaredhanson/oauth2orize-chain)
+[![Dependencies](https://img.shields.io/david/jaredhanson/oauth2orize-chain.svg)](https://david-dm.org/jaredhanson/oauth2orize-chain)
 
 
 Chained token exchange for [OAuth2orize](https://github.com/jaredhanson/oauth2orize).
 
-This exchange is used to exchange an access token issued by an OAuth domain for
-a chained access token, potentially issued by a different OAuth domain.  This
-scenario facilitiates service chaining, in which one service needs to
-communicate with another service in order to fulfill the original request.
+This exchange is used to by a protected service to exchange a token it receives
+from a client for a token it can use to access another protected service,
+potentially within a different security domain.  This scenario facilitiates
+service chaining, in which one service needs to communicate with another service
+in order to fulfill the original request.
 
 ## Install
 
@@ -41,29 +41,56 @@ server.exchange('http://oauth.net/grant_type/chain', chain(function(client, sche
 });
 ```
 
-## Implementation
+## Considerations
+
+#### Specification
 
 This module is implemented based on [Chain Grant Type for OAuth2](http://tools.ietf.org/html/draft-hunt-oauth-chain-01),
-Draft 01.  Implementers are encouraged to track the progress of this
-specification and update update their implementations as necessary.
-Furthermore, the implications of relying on a non-final draft specification
-should be understood prior to deployment.
+draft version 01.  As a draft, the specification remains a work-in-progress and
+is *not* final.  The specification is under discussion within the [OAuth Working Group](https://datatracker.ietf.org/wg/oauth/about/)
+of the [IETF](https://www.ietf.org/).  Implementers are encouraged to track the
+progress of this specification and update implementations as necessary.
+Furthermore, the implications of relying on non-final specifications should be
+understood prior to deployment.
 
-## Related Modules
+## Contributing
 
-- [oauth2orize-redelegate](https://github.com/jaredhanson/oauth2orize-redelegate) — token redelegation exchange
+#### Tests
 
-## Tests
+The test suite is located in the `test/` directory.  All new features are
+expected to have corresponding test cases.  Ensure that the complete test suite
+passes by executing:
 
-    $ npm install
-    $ npm test
+```bash
+$ make test
+```
 
-## Credits
+#### Coverage
 
-  - [Jared Hanson](http://github.com/jaredhanson)
+All new feature development is expected to have test coverage.  Patches that
+increse test coverage are happily accepted.  Coverage reports can be viewed by
+executing:
+
+```bash
+$ make test-cov
+$ make view-cov
+```
+
+## Support
+
+#### Funding
+
+This software is provided to you as open source, free of charge.  The time and
+effort to develop and maintain this project is volunteered by [@jaredhanson](https://github.com/jaredhanson).
+If you (or your employer) benefit from this project, please consider a financial
+contribution.  Your contribution helps continue the efforts that produce this
+and other open source software.
+
+Funds are accepted via [PayPal](https://paypal.me/jaredhanson), [Venmo](https://venmo.com/jaredhanson),
+and [other](http://jaredhanson.net/pay) methods.  Any amount is appreciated.
 
 ## License
 
 [The MIT License](http://opensource.org/licenses/MIT)
 
-Copyright (c) 2014 Jared Hanson <[http://jaredhanson.net/](http://jaredhanson.net/)>
+Copyright (c) 2014-2017 Jared Hanson <[http://jaredhanson.net/](http://jaredhanson.net/)>
