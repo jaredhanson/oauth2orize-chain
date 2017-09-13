@@ -515,6 +515,35 @@ describe('exchange.chain', function() {
     });
   });
   
+  describe('handling a request with unsupported oauth_token parameter', function() {
+    var err;
+
+    before(function(done) {
+      function issue(client, token, done) {
+        return done(null, '.ignore');
+      }
+      
+      chai.connect.use(chain(issue))
+        .req(function(req) {
+          req.user = { id: 'c123' };
+          req.body = { oauth_token: 'MAC token="h480djs93hd8",timestamp="137131200",nonce="dj83hs9s",signature="kDZvddkndxvhGRXZhvuDjEWhGeE="' };
+        })
+        .next(function(e) {
+          err = e;
+          done();
+        })
+        .dispatch();
+    });
+    
+    it('should error', function() {
+      expect(err).to.be.an.instanceOf(Error);
+      expect(err.constructor.name).to.equal('TokenError');
+      expect(err.message).to.equal('Unsupported authorization scheme: MAC');
+      expect(err.code).to.equal('invalid_request');
+      expect(err.status).to.equal(400);
+    });
+  });
+  
   describe('encountering an error while issuing an access token', function() {
     var err;
 
