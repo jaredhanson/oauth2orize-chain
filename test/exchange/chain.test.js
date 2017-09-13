@@ -294,7 +294,7 @@ describe('exchange.chain', function() {
     var response;
 
     before(function(done) {
-      function issue(client, scheme, token, scope, done) {
+      function issue(client, token, scheme, scope, done) {
         if (client.id !== 'c123') { return done(new Error('incorrect client argument')); }
         if (token !== 'shh') { return done(new Error('incorrect token argument')); }
         if (scheme !== 'Bearer') { return done(new Error('incorrect scheme argument')); }
