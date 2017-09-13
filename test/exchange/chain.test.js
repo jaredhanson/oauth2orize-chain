@@ -13,7 +13,7 @@ describe('exchange.chain', function() {
   it('should throw if constructed without an issue callback', function() {
     expect(function() {
       chain();
-    }).to.throw(TypeError, 'chain exchange requires an issue callback');
+    }).to.throw(TypeError, 'oauth2orize-chain exchange requires an issue callback');
   });
   
   describe('issuing an access token', function() {
@@ -21,10 +21,10 @@ describe('exchange.chain', function() {
 
     before(function(done) {
       function issue(client, token, done) {
-        if (client.id == 'c123' && token == 'shh') {
-          return done(null, 's3cr1t');
-        }
-        return done(new Error('something is wrong'));
+        if (client.id !== 'c123') { return done(new Error('incorrect client argument')); }
+        if (token !== 'shh') { return done(new Error('incorrect token argument')); }
+        
+        return done(null, 's3cr1t');
       }
       
       chai.connect.use(chain(issue))
@@ -55,10 +55,10 @@ describe('exchange.chain', function() {
 
     before(function(done) {
       function issue(client, token, done) {
-        if (client.id == 'c123' && token == 'shh') {
-          return done(null, 's3cr1t', 'getANotehr');
-        }
-        return done(new Error('something is wrong'));
+        if (client.id !== 'c123') { return done(new Error('incorrect client argument')); }
+        if (token !== 'shh') { return done(new Error('incorrect token argument')); }
+        
+        return done(null, 's3cr1t', 'getANotehr');
       }
       
       chai.connect.use(chain(issue))
@@ -89,10 +89,10 @@ describe('exchange.chain', function() {
 
     before(function(done) {
       function issue(client, token, done) {
-        if (client.id == 'c123' && token == 'shh') {
-          return done(null, 's3cr1t', { 'expires_in': 3600 });
-        }
-        return done(new Error('something is wrong'));
+        if (client.id !== 'c123') { return done(new Error('incorrect client argument')); }
+        if (token !== 'shh') { return done(new Error('incorrect token argument')); }
+        
+        return done(null, 's3cr1t', { 'expires_in': 3600 });
       }
       
       chai.connect.use(chain(issue))
@@ -123,10 +123,10 @@ describe('exchange.chain', function() {
 
     before(function(done) {
       function issue(client, token, done) {
-        if (client.id == 'c123' && token == 'shh') {
-          return done(null, 's3cr1t', { 'token_type': 'foo', 'expires_in': 3600 });
-        }
-        return done(new Error('something is wrong'));
+        if (client.id !== 'c123') { return done(new Error('incorrect client argument')); }
+        if (token !== 'shh') { return done(new Error('incorrect token argument')); }
+        
+        return done(null, 's3cr1t', { 'token_type': 'foo', 'expires_in': 3600 });
       }
       
       chai.connect.use(chain(issue))
@@ -157,10 +157,10 @@ describe('exchange.chain', function() {
 
     before(function(done) {
       function issue(client, token, done) {
-        if (client.id == 'c123' && token == 'shh') {
-          return done(null, 's3cr1t', null, { 'expires_in': 3600 });
-        }
-        return done(new Error('something is wrong'));
+        if (client.id !== 'c123') { return done(new Error('incorrect client argument')); }
+        if (token !== 'shh') { return done(new Error('incorrect token argument')); }
+        
+        return done(null, 's3cr1t', null, { 'expires_in': 3600 });
       }
       
       chai.connect.use(chain(issue))
@@ -191,10 +191,10 @@ describe('exchange.chain', function() {
 
     before(function(done) {
       function issue(client, token, done) {
-        if (client.id == 'c123' && token == 'shh') {
-          return done(null, 's3cr1t', 'blahblag', { 'token_type': 'foo', 'expires_in': 3600 });
-        }
-        return done(new Error('something is wrong'));
+        if (client.id !== 'c123') { return done(new Error('incorrect client argument')); }
+        if (token !== 'shh') { return done(new Error('incorrect token argument')); }
+        
+        return done(null, 's3cr1t', 'blahblag', { 'token_type': 'foo', 'expires_in': 3600 });
       }
       
       chai.connect.use(chain(issue))
@@ -225,10 +225,11 @@ describe('exchange.chain', function() {
 
     before(function(done) {
       function issue(client, token, scope, done) {
-        if (client.id == 'c123' && token == 'shh' && scope.length == 1 && scope[0] == 'read') {
-          return done(null, 's3cr1t');
-        }
-        return done(new Error('something is wrong'));
+        if (client.id !== 'c123') { return done(new Error('incorrect client argument')); }
+        if (token !== 'shh') { return done(new Error('incorrect token argument')); }
+        if (scope.length !== 1 || scope[0] !== 'read') { return done(new Error('incorrect scope argument')); }
+        
+        return done(null, 's3cr1t');
       }
       
       chai.connect.use(chain(issue))
@@ -259,10 +260,11 @@ describe('exchange.chain', function() {
 
     before(function(done) {
       function issue(client, token, scope, done) {
-        if (client.id == 'c123' && token == 'shh' && scope.length == 2 && scope[0] == 'read' && scope[1] == 'write') {
-          return done(null, 's3cr1t');
-        }
-        return done(new Error('something is wrong'));
+        if (client.id !== 'c123') { return done(new Error('incorrect client argument')); }
+        if (token !== 'shh') { return done(new Error('incorrect token argument')); }
+        if (scope.length !== 2 || scope[0] !== 'read' || scope[1] !== 'write') { return done(new Error('incorrect scope argument')); }
+        
+        return done(null, 's3cr1t');
       }
       
       chai.connect.use(chain(issue))
