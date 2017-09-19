@@ -17,7 +17,9 @@ in order to fulfill the original request.
 
 ## Install
 
-    $ npm install oauth2orize-chain
+```bash
+$ npm install oauth2orize-chain
+```
 
 ## Usage
 
@@ -26,7 +28,7 @@ in order to fulfill the original request.
 Register the exchange with a `Server` instance and implement the `issue`
 callback:
 
-```javascript
+```js
 var chain = require('oauth2orize-chain').exchange.chain;
 
 server.exchange('http://oauth.net/grant_type/chain', chain(function(client, token, scope, done) {
