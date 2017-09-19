@@ -9,7 +9,7 @@
 
 Chained token exchange for [OAuth2orize](https://github.com/jaredhanson/oauth2orize).
 
-This exchange is used to by a protected service to exchange a token it receives
+This exchange is used by a protected service to exchange a token it receives
 from a client for a token it can use to access another protected service,
 potentially within a different security domain.  This scenario facilitiates
 service chaining, in which one service needs to communicate with another service
@@ -32,8 +32,8 @@ var chain = require('oauth2orize-chain').exchange.chain;
 server.exchange('http://oauth.net/grant_type/chain', chain(function(client, token, scope, done) {
   // TODO:
   // 1. Verify the access token.
-  // 2. Ensure that the token is being exchanged by resource server for which it
-  //    is intended.
+  // 2. Ensure that the token is being exchanged by a resource server for which
+  //    it is intended.
   // 3. Issue a chained access token.
 });
 ```
