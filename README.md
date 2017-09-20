@@ -1,6 +1,6 @@
 # oauth2orize-chain
 
-[![Version](https://img.shields.io/npm/v/oauth2orize-acdc.svg?label=version)](https://www.npmjs.com/package/oauth2orize-acdc)
+[![Version](https://img.shields.io/npm/v/oauth2orize-chain.svg?label=version)](https://www.npmjs.com/package/oauth2orize-chain)
 [![Build](https://img.shields.io/travis/jaredhanson/oauth2orize-chain.svg)](https://travis-ci.org/jaredhanson/oauth2orize-chain)
 [![Quality](https://img.shields.io/codeclimate/github/jaredhanson/oauth2orize-chain.svg?label=quality)](https://codeclimate.com/github/jaredhanson/oauth2orize-chain)
 [![Coverage](https://img.shields.io/coveralls/jaredhanson/oauth2orize-chain.svg)](https://coveralls.io/r/jaredhanson/oauth2orize-chain)
