@@ -1,12 +1,5 @@
 # oauth2orize-chain
 
-[![Version](https://img.shields.io/npm/v/oauth2orize-chain.svg?label=version)](https://www.npmjs.com/package/oauth2orize-chain)
-[![Build](https://img.shields.io/travis/jaredhanson/oauth2orize-chain.svg)](https://travis-ci.org/jaredhanson/oauth2orize-chain)
-[![Quality](https://img.shields.io/codeclimate/github/jaredhanson/oauth2orize-chain.svg?label=quality)](https://codeclimate.com/github/jaredhanson/oauth2orize-chain)
-[![Coverage](https://img.shields.io/coveralls/jaredhanson/oauth2orize-chain.svg)](https://coveralls.io/r/jaredhanson/oauth2orize-chain)
-[![Dependencies](https://img.shields.io/david/jaredhanson/oauth2orize-chain.svg)](https://david-dm.org/jaredhanson/oauth2orize-chain)
-
-
 Chained token exchange for [OAuth2orize](https://github.com/jaredhanson/oauth2orize).
 
 This exchange is used by a protected service to exchange a token it receives
@@ -14,6 +7,14 @@ from a client for a token it can use to access another protected service,
 potentially within a different security domain.  This scenario facilitiates
 service chaining, in which one service needs to communicate with another service
 in order to fulfill the original request.
+
+Status:
+[![Version](https://img.shields.io/npm/v/oauth2orize-chain.svg?label=version)](https://www.npmjs.com/package/oauth2orize-chain)
+[![Build](https://img.shields.io/travis/jaredhanson/oauth2orize-chain.svg)](https://travis-ci.org/jaredhanson/oauth2orize-chain)
+[![Quality](https://img.shields.io/codeclimate/github/jaredhanson/oauth2orize-chain.svg?label=quality)](https://codeclimate.com/github/jaredhanson/oauth2orize-chain)
+[![Coverage](https://img.shields.io/coveralls/jaredhanson/oauth2orize-chain.svg)](https://coveralls.io/r/jaredhanson/oauth2orize-chain)
+[![Dependencies](https://img.shields.io/david/jaredhanson/oauth2orize-chain.svg)](https://david-dm.org/jaredhanson/oauth2orize-chain)
+
 
 ## Install
 
@@ -56,6 +57,4 @@ understood prior to deployment.
 
 [The MIT License](http://opensource.org/licenses/MIT)
 
-Copyright (c) 2014-2017 Jared Hanson <[http://jaredhanson.net/](http://jaredhanson.net/)>
-
-<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/vK9dyjRnnWsMzzJTQ57fRJpH/jaredhanson/oauth2orize-chain'>  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/vK9dyjRnnWsMzzJTQ57fRJpH/jaredhanson/oauth2orize-chain.svg' /></a>
+Copyright (c) 2014-2018 Jared Hanson <[http://jaredhanson.net/](http://jaredhanson.net/)>
