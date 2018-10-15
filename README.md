@@ -8,12 +8,6 @@ potentially within a different security domain.  This scenario facilitiates
 service chaining, in which one service needs to communicate with another service
 in order to fulfill the original request.
 
----
-
-<p align="center"><a href="//pluralsight.pxf.io/c/1312135/448522/7490">Start a 10-day free trial at Pluralsight - Over 5,000 Courses Available</a></p>
-
----
-
 Status:
 [![Version](https://img.shields.io/npm/v/oauth2orize-chain.svg?label=version)](https://www.npmjs.com/package/oauth2orize-chain)
 [![Build](https://img.shields.io/travis/jaredhanson/oauth2orize-chain.svg)](https://travis-ci.org/jaredhanson/oauth2orize-chain)
